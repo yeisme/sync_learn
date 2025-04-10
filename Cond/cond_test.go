@@ -1,12 +1,11 @@
-package main
+package cond
 
 import (
-	"fmt"
 	"sync"
-	"time"
+	"testing"
 )
 
-func main() {
+func cond_run() {
 	// 创建一个队列
 	queue := make([]int, 0, 10)
 
@@ -43,7 +42,7 @@ func main() {
 				mutex.Unlock()
 
 				// 模拟处理数据
-				time.Sleep(time.Millisecond * 500)
+				// time.Sleep(time.Millisecond * 500)
 			}
 		}(i)
 	}
@@ -65,17 +64,23 @@ func main() {
 			mutex.Unlock()
 
 			// 控制生产速度
-			time.Sleep(time.Millisecond * 500)
+			// time.Sleep(time.Millisecond * 500)
 		}
 	}()
 
 	// 等待一段时间后广播唤醒所有消费者
-	time.Sleep(time.Second * 5)
+	// time.Sleep(time.Second * 5)
 	mutex.Lock()
-	fmt.Println("生产者: 广播通知所有消费者")
+	// fmt.Println("生产者: 广播通知所有消费者")
 	cond.Broadcast()
 	mutex.Unlock()
 
 	// 等待所有消费者完成
 	wg.Wait()
+}
+
+func BenchmarkCond(b *testing.B) {
+	for range b.N {
+		cond_run()
+	}
 }
