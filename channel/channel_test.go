@@ -67,7 +67,13 @@ func channel_run() {
 }
 
 func BenchmarkChannel(b *testing.B) {
-	for range b.N {
+	for b.Loop() {
 		channel_run()
 	}
 }
+
+/* 
+BenchmarkChannel-12    	  180950	      7422 ns/op	     521 B/op	      11 allocs/op
+BenchmarkCond-12    	  226564	      5253 ns/op	     440 B/op	      12 allocs/op
+
+*/

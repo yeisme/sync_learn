@@ -80,7 +80,7 @@ func cond_run() {
 }
 
 func BenchmarkCond(b *testing.B) {
-	for range b.N {
+	for b.Loop() {
 		cond_run()
 	}
 }
